@@ -1,8 +1,8 @@
 <?php
 
-function random($len = 5)
+function random($len = 2)
 {
-    return substr(str_shuffle(str_repeat("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", $len)), 0, $len);
+    return substr(str_shuffle(str_repeat("0123456789", $len)), 0, $len);
 }
 
 define('LINK_REGEX', '/^[a-zA-Z0-9\s]+$/u');
@@ -11,21 +11,21 @@ $uri = urldecode($_SERVER['REQUEST_URI']);
 $uri = str_replace('/pastebin/', '', $uri);
 $uri = str_replace('pastebin.php', '', $uri);
 
-// if (!is_dir('./data')) mkdir('data');
+if (!is_dir('./data')) mkdir('data');
 // if(!file_exists('./data/.htaccess')) file_put_contents('./data/.htaccess', 'deny from all');
 // if(!file_exists('./data/.htaccess')) file_put_contents('./data/.htaccess', 'deny from all');
 // if(!file_exists('./.htaccess')) file_put_contents('./.htaccess', "RewriteEngine On\nRewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !-f\nRewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !-d\nRewriteRule ^(.*)$ %{DOCUMENT_ROOT}/pastebin/pastebin.php [L]");
 
 if (isset($_POST['data']) && !empty($_POST['data'])) {
-    $random = random(5);
-    while (file_exists('./' . $random . '.txt'))
-        $random = random(5);
-    file_put_contents('./' . $random . '.txt', $_POST['data']);
-    header('Location: ./' . $random . '.txt');
+    $random = random(2);
+    while (file_exists('./data/' . $random))
+        $random = random(2);
+    file_put_contents('./data/' . $random, $_POST['data']);
+    header('Location: ./data/' . $random);
 } elseif (!empty($uri) && preg_match(LINK_REGEX, $uri)) {
     header('Content-Type: text/plain; charset=UTF-8');
-    if (file_exists('./' . $uri . '.txt'))
-        echo file_get_contents('./' . $uri . '.txt');
+    if (file_exists('./data/' . $uri))
+        echo file_get_contents('./data/' . $uri);
     else
         die('Not Found');
 } else {

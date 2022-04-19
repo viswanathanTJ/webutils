@@ -17,14 +17,28 @@ class UrlShortener {
     /**
      * Function to generate random unique code for new urls
      *
-     * @param string $num row number of the link saved in database
      *
-     * @return integer
+     * @return string
      */
     
-    public function generateUniqueCode($idOfRow) {
-        $idOfRow += 10000000;
-        return base_convert($idOfRow, 10, 36);
+    public function random($len = 2)
+    {
+        return substr(str_shuffle(str_repeat("abcdefghijklmnopqrstuvwxyz", $len)), 0, $len);
+    }
+    
+    public function generateUniqueCode() {
+        $random = $this->random(2);
+        
+        $existInDatabase = $this->db->query("SELECT * FROM link WHERE code = '{$random}'");
+        
+        while ($existInDatabase->num_rows) {
+            $random = $this->generateUniqueCode();
+            $existInDatabase = $this->db->query("SELECT * FROM link WHERE code = '{$random}'");
+        }
+        return $random;
+            
+        // $idOfRow += 10000000;
+        // return base_convert($idOfRow, 10, 36);
     }
     
     /**
@@ -57,7 +71,7 @@ class UrlShortener {
             $insertInDatabase  = $this->db->query("INSERT INTO link (url,created) VALUES ('{$orignalURL}',NOW())");
             $fetchFromDatabase = $this->db->query("SELECT * FROM link WHERE url = '{$orignalURL}'");
             $getIdOfRow        = $fetchFromDatabase->fetch_object()->id;
-            $uniqueCode        = $this->generateUniqueCode($getIdOfRow);
+            $uniqueCode        = $this->generateUniqueCode();
             $updateInDatabase  = $this->db->query("UPDATE link SET code = '{$uniqueCode}' WHERE url = '{$orignalURL}'");
             
             return $uniqueCode;
@@ -135,5 +149,3 @@ class UrlShortener {
         return '<a href="' . BASE_URL . $uniqueCode . '">' . BASE_URL . $uniqueCode . '</a>';
     }
 }
-
-?>
