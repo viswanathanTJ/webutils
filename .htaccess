@@ -3,7 +3,11 @@ ErrorDocument 401 http://viswa2k.ml/
 ErrorDocument 403 http://viswa2k.ml/
 ErrorDocument 404 http://viswa2k.ml/
 ErrorDocument 503 http://viswa2k.ml/
+
 RewriteEngine on
+RewriteCond  %{DOCUMENT_ROOT}/data/$1 -f
+RewriteRule  ^(.*)$  /data/$1  [L,QSA]
+
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ data/$1 [L]
+RewriteRule ^(.*)$ url/functions/redirect.php?secret=$1 [L]
