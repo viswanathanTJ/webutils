@@ -138,6 +138,18 @@ class UrlShortener {
     }
     
     /**
+     * Remove all links in database
+     *
+     * @param none
+     *
+     * @return none
+     */
+    
+    public function removeLinks() {
+        $this->db->query("truncate link;");
+    }
+    
+    /**
      * Generates link tag for the new shorten url
      *
      * @param string $uniqueCode
