@@ -39,7 +39,7 @@
     <form method="POST" action="functions/shorten.php">
         <div class="section group">
             <div class="col span_3_of_3">
-                <input type="url" id="input" name="url" class="input" placeholder="Enter a URL here">
+                <input type="url" id="input" name="url" autofocus class="input" placeholder="Enter a URL here">
             </div>
             <div class="col span_1_of_3">
                 <input type="text" id="custom" name="custom" class="input_custom" placeholder="Enable custom text"
@@ -55,6 +55,8 @@
         </div>
         <input type="submit" value="Go" class="submit">
     </form>
+        <a href="paste"><input type="submit" style="width:120px" value="Copy Cat" class="submit"></a>
+        <a href="fm"><input type="submit" style="width:120px" value="File Manager" class="submit"></a>
     <script>
       function toggle () {
         if (document.getElementById('myonoffswitch').checked) {

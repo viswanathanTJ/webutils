@@ -1,33 +1,51 @@
-<?php
-
-function random($len = 2)
-{
-    return substr(str_shuffle(str_repeat("0123456789", $len)), 0, $len);
-}
-
-define('LINK_REGEX', '/^[a-zA-Z0-9\s]+$/u');
-
-$uri = urldecode($_SERVER['REQUEST_URI']);
-$uri = str_replace('/pastebin/', '', $uri);
-$uri = str_replace('pastebin.php', '', $uri);
-
-if (!is_dir('./data')) mkdir('data');
-// if(!file_exists('./data/.htaccess')) file_put_contents('./data/.htaccess', 'deny from all');
-// if(!file_exists('./data/.htaccess')) file_put_contents('./data/.htaccess', 'deny from all');
-// if(!file_exists('./.htaccess')) file_put_contents('./.htaccess', "RewriteEngine On\nRewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !-f\nRewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !-d\nRewriteRule ^(.*)$ %{DOCUMENT_ROOT}/pastebin/pastebin.php [L]");
-
-if (isset($_POST['data']) && !empty($_POST['data'])) {
-    $random = random(2);
-    while (file_exists('./data/' . $random))
-        $random = random(2);
-    file_put_contents('./data/' . $random, $_POST['data']);
-    header('Location: ../' . $random);
-} elseif (!empty($uri) && preg_match(LINK_REGEX, $uri)) {
-    header('Content-Type: text/plain; charset=UTF-8');
-    if (file_exists('./data/' . $uri))
-        echo file_get_contents('./data/' . $uri);
-    else
-        die('Not Found');
-} else {
-    echo "<html><head><title>pastebin</title></head><body><form method='post'><textarea name='data' rows='10' cols='350'></textarea><br><br><button type='submit'>Save</button></form><a href='fm/'>File Manager</a><br><br><a href='url/'>URL Shortener</a></body></html>";
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copy Cat</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<center>
+    <h1>Copy Cat🐱</h1>
+    <form method="POST" action="store.php">
+        <div class="section group">
+            <div class="col span_3_of_3">
+                <textarea name="content" autofocus="" aria-required="true" style="height: 300px; width:100%; min-width:233px;outline-color: #167699;
+    border: 1px solid #ddd;"></textarea>
+            </div>
+            <div class="col span_1_of_3">
+                <input type="text" id="custom" name="custom" class="input_custom" placeholder="Enable custom text" disabled>
+            </div>
+            <div class="col span_2_of_3">
+                <div class="onoffswitch">
+                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch"
+                           onclick="toggle()">
+                    <label class="onoffswitch-label" for="myonoffswitch"></label>
+                </div>
+            </div>
+        </div>
+        <input type="submit" value="Go" class="submit">
+    </form>
+        <a href="../"><input type="submit" style="width:120px" value="Url Shortener" class="submit"></a>
+        <a href="../fm"><input type="submit" style="width:120px" value="File Manager" class="submit"></a>
+    <script>
+      function toggle () {
+        if (document.getElementById('myonoffswitch').checked) {
+          document.getElementById('custom').placeholder = 'Enter your custom text'
+          document.getElementById('custom').disabled = false
+          document.getElementById('custom').focus()
+        }
+        else {
+          document.getElementById('custom').value = ''
+          document.getElementById('custom').placeholder = 'Enable custom text'
+          document.getElementById('custom').disabled = true
+          document.getElementById('custom').blur()
+          document.getElementById('input').focus()
+        }
+      }
+    </script>
+</body>
+</html>
