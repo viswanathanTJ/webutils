@@ -2,45 +2,48 @@
 
 require_once("../config.php");
 
-class UrlShortener {
+class UrlShortener
+{
     protected $db;
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->db = new mysqli(HOST_NAME, USER_NAME, USER_PASSWORD, DB_NAME);
-        
+
         if ($this->db->connect_errno) {
             header("Location: ../index.php?error=db");
             die();
         }
     }
-    
+
     /**
      * Function to generate random unique code for new urls
      *
      *
      * @return string
      */
-    
+
     public function random($len = 2)
     {
         return substr(str_shuffle(str_repeat("abcdefghijklmnopqrstuvwxyz", $len)), 0, $len);
     }
-    
-    public function generateUniqueCode() {
+
+    public function generateUniqueCode()
+    {
         $random = $this->random(2);
-        
+
         $existInDatabase = $this->db->query("SELECT * FROM link WHERE code = '{$random}'");
-        
+
         while ($existInDatabase->num_rows) {
             $random = $this->generateUniqueCode();
             $existInDatabase = $this->db->query("SELECT * FROM link WHERE code = '{$random}'");
         }
         return $random;
-            
+
         // $idOfRow += 10000000;
         // return base_convert($idOfRow, 10, 36);
     }
-    
+
     /**
      * Validates URL, checks if already present in database and finally inserts
      * in database
@@ -49,35 +52,34 @@ class UrlShortener {
      *
      * @return string
      */
-    
-    public function validateUrlAndReturnCode($orignalURL) {
+
+    public function validateUrlAndReturnCode($orignalURL)
+    {
         $orignalURL = trim($orignalURL);
-        
+
         if (!filter_var($orignalURL, FILTER_VALIDATE_URL)) {
             header("Location: ../index.php?error=inurl");
             die();
-        }
-        
-        else {
+        } else {
             $orignalURL      = $this->db->real_escape_string($orignalURL);
             $existInDatabase = $this->db->query("SELECT * FROM link WHERE url ='{$orignalURL}'");
-            
+
             if ($existInDatabase->num_rows) {
                 $uniqueCode = $existInDatabase->fetch_object()->code;
-                
+
                 return $uniqueCode;
             }
-            
+
             $insertInDatabase  = $this->db->query("INSERT INTO link (url,created) VALUES ('{$orignalURL}',NOW())");
             $fetchFromDatabase = $this->db->query("SELECT * FROM link WHERE url = '{$orignalURL}'");
             $getIdOfRow        = $fetchFromDatabase->fetch_object()->id;
             $uniqueCode        = $this->generateUniqueCode();
             $updateInDatabase  = $this->db->query("UPDATE link SET code = '{$uniqueCode}' WHERE url = '{$orignalURL}'");
-            
+
             return $uniqueCode;
         }
     }
-    
+
     /**
      * Insert url and custom short url on the database
      *
@@ -86,20 +88,21 @@ class UrlShortener {
      *
      * @return boolean
      */
-    
-    public function returnCustomCode($orignalURL, $customUniqueCode) {
+
+    public function returnCustomCode($orignalURL, $customUniqueCode)
+    {
         $orignalURL       = trim($orignalURL);
         $customUniqueCode = trim($customUniqueCode);
-        
+
         if (filter_var($orignalURL, FILTER_VALIDATE_URL)) {
             $insert = $this->db->query("INSERT INTO link (url,code,created) VALUES ('{$orignalURL}','{$customUniqueCode}',NOW())");
-            
+
             return true;
         }
-        
+
         return false;
     }
-    
+
     /**
      * Returns the orignal URL based on the shorten url
      *
@@ -107,21 +110,20 @@ class UrlShortener {
      *
      * @return string
      */
-    
-    public function getOrignalURL($string) {
+
+    public function getOrignalURL($string)
+    {
         $string = $this->db->real_escape_string(strip_tags(addslashes($string)));
         $rows   = $this->db->query("SELECT url FROM link WHERE code = '{$string}'");
-        
+
         if ($rows->num_rows) {
             return $rows->fetch_object()->url;
-        }
-        
-        else {
+        } else {
             header("Location: index.php?error=dnp");
             die();
         }
     }
-    
+
     /**
      * Check if shorten code is already present in database
      *
@@ -129,14 +131,15 @@ class UrlShortener {
      *
      * @return boolean
      */
-    
-    public function checkUrlExistInDatabase($customCode) {
+
+    public function checkUrlExistInDatabase($customCode)
+    {
         $customCode  = $this->db->real_escape_string(strip_tags(addslashes($customCode)));
         $fetchedRows = $this->db->query("SELECT url FROM link WHERE code = '{$customCode}' LIMIT 1");
-        
+
         return $fetchedRows->num_rows > 0;
     }
-    
+
     /**
      * Remove all links in database
      *
@@ -144,11 +147,12 @@ class UrlShortener {
      *
      * @return none
      */
-    
-    public function removeLinks() {
+
+    public function removeLinks()
+    {
         $this->db->query("truncate link;");
     }
-    
+
     /**
      * Generates link tag for the new shorten url
      *
@@ -156,8 +160,9 @@ class UrlShortener {
      *
      * @return string
      */
-    
-    public function generateLinkForShortURL($uniqueCode = '') {
+
+    public function generateLinkForShortURL($uniqueCode = '')
+    {
         return '<a href="' . BASE_URL . $uniqueCode . '">' . BASE_URL . $uniqueCode . '</a>';
     }
 }

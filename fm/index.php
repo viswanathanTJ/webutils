@@ -14,7 +14,7 @@ $allow_show_folders = true; // Set to false to hide all subdirectories
 $disallowed_patterns = ['*.php'];  // must be an array.  Matching files not allowed to be uploaded
 $hidden_patterns = ['*.php', '.*']; // Matching files hidden in directory index
 
-$PASSWORD = '123';  // Set the password, to access the file manager... (optional)
+$PASSWORD = '';  // Set the password, to access the file manager... (optional)
 
 if ($PASSWORD) {
 
@@ -34,7 +34,7 @@ if ($PASSWORD) {
 // must be in UTF-8 or `basename` doesn't work
 setlocale(LC_ALL, 'en_US.UTF-8');
 
-$tmp_dir = dirname($_SERVER['SCRIPT_FILENAME']);
+$tmp_dir = dirname(__FILE__);
 if (DIRECTORY_SEPARATOR === '\\') $tmp_dir = str_replace('/', DIRECTORY_SEPARATOR, $tmp_dir);
 $tmp = get_absolute_path($tmp_dir . '/' . $_REQUEST['file']);
 

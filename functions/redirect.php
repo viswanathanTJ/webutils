@@ -13,5 +13,3 @@ if (isset($_GET['secret'])) {
 
 header("Location: index.php");
 die();
-
-?>
