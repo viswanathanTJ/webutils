@@ -33,5 +33,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         else
             die('Not Found');
     }
+    else {
+        header("Location: index.php?error=inurl");
+        die();
+    }
 }
 ?>

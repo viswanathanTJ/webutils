@@ -10,6 +10,11 @@
 <body>
 <center>
     <h1>Copy Cat🐱</h1>
+    <?php
+    if (isset($_GET['error']) && $_GET['error'] == 'inurl') {
+        echo "<p class='alert'>Empty Content!</p>";
+    }
+    ?>
     <form method="POST" action="store.php">
         <div class="section group">
             <div class="col span_3_of_3">
