@@ -21,20 +21,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $random = $_POST['custom'];
         else
             $random = random(2);
-        while (file_exists('./data/' . $random))
+        while (file_exists('./data/' . $random . '.txt'))
             $random = random(2);
-        file_put_contents('./data/' . $random, $_POST['content']);
-        echo $random;
+        file_put_contents('./data/' . $random . '.txt', $_POST['content']);
         header('Location: ../' . $random);
     } elseif (!empty($uri) && preg_match(LINK_REGEX, $uri)) {
         header('Content-Type: text/plain; charset=UTF-8');
-        if (file_exists('./data/' . $uri))
-            echo file_get_contents('./data/' . $uri);
+        if (file_exists('./data/' . $uri . '.txt'))
+            echo file_get_contents('./data/' . $uri . '.txt');
         else
             die('Not Found');
     }
     else {
-        header("Location: index.php?error=inurl");
+        header("Location: paste/index.php?error=inurl");
         die();
     }
 }

@@ -5,6 +5,7 @@
 
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,11 +14,12 @@
     <title><?php echo SITE_NAME; ?></title>
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
+
 <body>
-<br>
-<center>
-    <h1><?php echo SITE_NAME; ?></h1>
-    <?php
+    <br>
+    <center>
+        <h1><?php echo SITE_NAME; ?></h1>
+        <?php
     if (isset($_SESSION['success'])) {
         echo "<p class='success'>" . $_SESSION['success'] . "</p>";
         unset($_SESSION['success']);
@@ -36,42 +38,42 @@
         echo "<p class='alert'>Ok! So I got to know you love playing! But don't play here!!!</p>";
     }
     ?>
-    <form method="POST" action="functions/shorten.php">
-        <div class="section group">
-            <div class="col span_3_of_3">
-                <input type="url" id="input" name="url" autofocus class="input" placeholder="Enter a URL here">
-            </div>
-            <div class="col span_1_of_3">
-                <input type="text" id="custom" name="custom" class="input_custom" placeholder="Enable custom text"
-                       disabled>
-            </div>
-            <div class="col span_2_of_3">
-                <div class="onoffswitch">
-                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch"
-                           onclick="toggle()">
-                    <label class="onoffswitch-label" for="myonoffswitch"></label>
+        <form method="POST" action="functions/shorten.php">
+            <div class="section group">
+                <div class="col span_3_of_3">
+                    <input type="url" id="input" name="url" autofocus class="input" placeholder="Enter a URL here">
+                </div>
+                <div class="col span_1_of_3">
+                    <input type="text" id="custom" name="custom" class="input_custom" placeholder="Enable custom text"
+                        disabled>
+                </div>
+                <div class="col span_2_of_3">
+                    <div class="onoffswitch">
+                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch"
+                            onclick="toggle()">
+                        <label class="onoffswitch-label" for="myonoffswitch"></label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <input type="submit" value="Go" class="submit">
-    </form>
+            <input type="submit" value="Go" class="submit">
+        </form>
         <a href="paste"><input type="submit" style="width:120px" value="Copy Cat" class="submit"></a>
         <a href="fm"><input type="submit" style="width:120px" value="File Manager" class="submit"></a>
-    <script>
-      function toggle () {
-        if (document.getElementById('myonoffswitch').checked) {
-          document.getElementById('custom').placeholder = 'Enter your custom text'
-          document.getElementById('custom').disabled = false
-          document.getElementById('custom').focus()
+        <script>
+        function toggle() {
+            if (document.getElementById('myonoffswitch').checked) {
+                document.getElementById('custom').placeholder = 'Enter your custom text'
+                document.getElementById('custom').disabled = false
+                document.getElementById('custom').focus()
+            } else {
+                document.getElementById('custom').value = ''
+                document.getElementById('custom').placeholder = 'Enable custom text'
+                document.getElementById('custom').disabled = true
+                document.getElementById('custom').blur()
+                document.getElementById('input').focus()
+            }
         }
-        else {
-          document.getElementById('custom').value = ''
-          document.getElementById('custom').placeholder = 'Enable custom text'
-          document.getElementById('custom').disabled = true
-          document.getElementById('custom').blur()
-          document.getElementById('input').focus()
-        }
-      }
-    </script>
+        </script>
 </body>
+
 </html>
