@@ -5,7 +5,7 @@
 error_reporting(error_reporting() & ~E_NOTICE);
 
 //Security options
-$allow_delete = false; // Set to false to disable delete button and delete POST request.
+$allow_delete = true; // Set to false to disable delete button and delete POST request.
 $allow_upload = true; // Set to true to allow upload files
 $allow_create_folder = true; // Set to false to disable folder creation
 $allow_direct_link = true; // Set to false to only allow downloads and not direct link
@@ -14,7 +14,7 @@ $allow_show_folders = true; // Set to false to hide all subdirectories
 $disallowed_patterns = ['*.php'];  // must be an array.  Matching files not allowed to be uploaded
 $hidden_patterns = ['*.php', '.*']; // Matching files hidden in directory index
 
-$PASSWORD = '';  // Set the password, to access the file manager... (optional)
+$PASSWORD = '852';  // Set the password, to access the file manager... (optional)
 
 if ($PASSWORD) {
 
@@ -208,7 +208,7 @@ $MAX_UPLOAD_SIZE = min(asBytes(ini_get('post_max_size')), asBytes(ini_get('uploa
 
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>File Manager</title>
+
     <style>
     body {
         font-family: "lucida grande", "Segoe UI", Arial, sans-serif;

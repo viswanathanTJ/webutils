@@ -17,7 +17,7 @@ if (!is_dir('./data')) mkdir('data');
 // if(!file_exists('./.htaccess')) file_put_contents('./.htaccess', "RewriteEngine On\nRewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !-f\nRewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !-d\nRewriteRule ^(.*)$ %{DOCUMENT_ROOT}/pastebin/pastebin.php [L]");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['content']) && !empty($_POST['content'])) {
-        if (($_POST['onoffswitch'] == 'on') && (isset($_POST['custom'])))
+        if (($_POST['onoffswitch'] == 'on') && (isset($_POST['custom'])) && $_POST['custom']!=" " )
             $random = $_POST['custom'];
         else
             $random = random(2);
@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die('Not Found');
     }
     else {
-        header("Location: paste/index.php?error=inurl");
+        header("Location: p/index.php?error=inurl");
         die();
     }
 }

@@ -6,8 +6,11 @@ ErrorDocument 503 http://viswa2k.ml/
 
 RewriteEngine on
 
-RewriteCond  %{DOCUMENT_ROOT}/paste/data/$1.txt -f
-RewriteRule  ^(.*)$  /paste/data/$1.txt [L,QSA]
+RewriteCond  %{DOCUMENT_ROOT}/p/data/$1.txt -f
+RewriteRule  ^(.*)$  /p/data/$1.txt [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php  [L]
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f

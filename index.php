@@ -57,7 +57,7 @@
             </div>
             <input type="submit" value="Go" class="submit">
         </form>
-        <a href="paste"><input type="submit" style="width:120px" value="Copy Cat" class="submit"></a>
+        <a href="p"><input type="submit" style="width:120px" value="Copy Cat" class="submit"></a>
         <a href="fm"><input type="submit" style="width:120px" value="File Manager" class="submit"></a>
         <script>
         function toggle() {

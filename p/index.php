@@ -19,10 +19,10 @@
         <div class="section group">
             <div class="col span_3_of_3">
                 <textarea name="content" autofocus="" aria-required="true" style="height: 300px; width:100%; min-width:233px;outline-color: #167699;
-    border: 1px solid #ddd;"></textarea>
+    border: 1px solid #ddd;" required></textarea>
             </div>
             <div class="col span_1_of_3">
-                <input type="text" id="custom" name="custom" class="input_custom" placeholder="Enable custom text" disabled>
+                <input type="text" id="custom" name="custom" class="input_custom" placeholder="Enable custom text" required disabled>
             </div>
             <div class="col span_2_of_3">
                 <div class="onoffswitch">
