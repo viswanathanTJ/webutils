@@ -1,8 +1,8 @@
-ErrorDocument 400 http://viswa2k.ml/
-ErrorDocument 401 http://viswa2k.ml/
-ErrorDocument 403 http://viswa2k.ml/
-ErrorDocument 404 http://viswa2k.ml/
-ErrorDocument 503 http://viswa2k.ml/
+ErrorDocument 400 http://viswa2k.rf.gd/
+ErrorDocument 401 http://viswa2k.rf.gd/
+ErrorDocument 403 http://viswa2k.rf.gd/
+ErrorDocument 404 http://viswa2k.rf.gd/err
+ErrorDocument 503 http://viswa2k.rf.gd/
 
 RewriteEngine on
 
